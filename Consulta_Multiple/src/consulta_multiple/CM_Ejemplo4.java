@@ -46,7 +46,7 @@ public class CM_Ejemplo4 extends javax.swing.JFrame {
         String valor1=txtvend.getText();
         try{
             String sql="SELECT (c.nombre_clie+' '+c.ape_pat_clie+' '+c.ape_mat_clie),"
-            + "c.dir_clie,v.fec_ven FROM Cliente AS c INNER JOIN Venta AS v ON (c.cod_clie=v.cod_clie) WHERE v.fec_ven BETWEEN '"+valor1+"' AND '"+valor2+"'";
+            + "c.dir_clie,v.fec_ven FROM Cliente AS c INNER JOIN Venta AS v ON (c.cod_clie=v.cod_clie) WHERE v.fec_ven BETWEEN '"+valor1+"'";
             limpiar();
             stmt=con.createStatement();
             rs=stmt.executeQuery(sql);
