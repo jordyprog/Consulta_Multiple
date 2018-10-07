@@ -43,19 +43,19 @@ public class CM_Ejemplo4 extends javax.swing.JFrame {
     }
     
     private void mostrar(){
-        String valor1=txtvend.getText();
+        String valor=txtvend.getText();
         try{
-            String sql="SELECT (c.nombre_clie+' '+c.ape_pat_clie+' '+c.ape_mat_clie),"
-            + "c.dir_clie,v.fec_ven FROM Cliente AS c INNER JOIN Venta AS v ON (c.cod_clie=v.cod_clie) WHERE v.fec_ven BETWEEN '"+valor1+"'";
-            limpiar();
+            String sql="SELECT (VE.nombre_vend+' '+VE.ape_pat_vend),"
+            + "(C.nombre_clie+' '+C.ape_pat_clie),V.fec_ven FROM Cliente AS C INNER JOIN Venta AS V ON (C.cod_clie=V.cod_clie) INNER JOIN Vendedor AS VE ON (V.cod_vend=VE.cod_vend)"
+            + "WHERE VE.ape_pat_vend='"+valor+"'";
             stmt=con.createStatement();
             rs=stmt.executeQuery(sql);
+            limpiar();
             while(rs.next()){
-            String []datos04=new String[4];
+            String []datos04=new String[3];
             datos04[0]=rs.getString(1);
             datos04[1]=rs.getString(2);
             datos04[2]=rs.getString(3);
-            datos04[3]=rs.getString(4);
             dtm04.addRow(datos04);
             }
 //            con.close();
@@ -88,11 +88,13 @@ public class CM_Ejemplo4 extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblvend = new javax.swing.JTable();
         btnCONSULTA = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("VENDEDOR");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(9, 23, -1, -1));
+        getContentPane().add(txtvend, new org.netbeans.lib.awtextra.AbsoluteConstraints(83, 21, 90, -1));
 
         tblvend.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -107,60 +109,15 @@ public class CM_Ejemplo4 extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblvend);
 
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 46, 381, 189));
+
         btnCONSULTA.setText("CONSULTA");
         btnCONSULTA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCONSULTAActionPerformed(evt);
             }
         });
-
-        jButton1.setText("jButton1");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(jButton1)
-                .addContainerGap(289, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(9, 9, 9)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(txtvend, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(153, 153, 153)
-                                    .addComponent(btnCONSULTA)))
-                            .addGap(139, 139, 139)))
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(252, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(23, 23, 23))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(21, 21, 21)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(txtvend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addComponent(btnCONSULTA)
-                    .addContainerGap(22, Short.MAX_VALUE)))
-        );
+        getContentPane().add(btnCONSULTA, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 240, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -208,7 +165,6 @@ public class CM_Ejemplo4 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCONSULTA;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblvend;
