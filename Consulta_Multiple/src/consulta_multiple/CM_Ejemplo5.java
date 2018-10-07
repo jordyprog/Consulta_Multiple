@@ -17,11 +17,11 @@ public class CM_Ejemplo5 extends javax.swing.JFrame {
     
     public CM_Ejemplo5() {
         initComponents();
-        String titulos []={"Código_Venta","Cliente","Producto","Precio_Unit.","Cantidad","Sub_Total"};
+        String titulos []={"Código","Cliente","Producto","Pre/Und","Cantidad","SubTotal"};
             dtm.setColumnIdentifiers(titulos);
             tblConsulta.setModel(dtm);    
             conectar();
-            Factura();
+            factura();
     }
     public void conectar(){
         String url="jdbc:sqlserver://localhost;databaseName=ventasNoche;user="
@@ -33,7 +33,7 @@ public class CM_Ejemplo5 extends javax.swing.JFrame {
             JOptionPane.INFORMATION_MESSAGE);
         }
         catch(Exception ex){
-            JOptionPane.showMessageDialog(rootPane, "No se pudo conectar a la"
+            JOptionPane.showMessageDialog(rootPane, "No se pudo conectar a la "
             + "base de datos", "Conectar", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -45,7 +45,6 @@ public class CM_Ejemplo5 extends javax.swing.JFrame {
         }    
     }
     private void mostrar(){
-        
         String valor=(String)cboFactura.getSelectedItem();
         try{
             String sql="SELECT v.cod_ven,(c.nombre_clie+' '+c.ape_pat_clie),p.des_prod,p.pre_ven_pro,dv.cant_vta,(dv.cant_vta*p.pre_ven_pro) \n" +
@@ -62,7 +61,6 @@ public class CM_Ejemplo5 extends javax.swing.JFrame {
             datos[3]=rs.getString(4);
             datos[4]=rs.getString(5);
             datos[5]=rs.getString(6);
-
             dtm.addRow(datos);
             }
 //            con.close();
@@ -73,7 +71,7 @@ public class CM_Ejemplo5 extends javax.swing.JFrame {
         }
     }
     
-    private void Factura(){
+    private void factura(){
         try{
             String sql="SELECT cod_ven FROM Venta order by cod_ven";
             stmt=con.createStatement();
@@ -103,12 +101,12 @@ public class CM_Ejemplo5 extends javax.swing.JFrame {
         tblConsulta = new javax.swing.JTable();
         btnConsultar = new javax.swing.JButton();
         cboFactura = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        txttotal = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("CÓDIGO DE VENTA");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 40, -1, -1));
 
         tblConsulta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -123,18 +121,57 @@ public class CM_Ejemplo5 extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblConsulta);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 570, 260));
-
         btnConsultar.setText("CONSULTAR");
         btnConsultar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConsultarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnConsultar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 40, -1, -1));
 
         cboFactura.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Seleccionar>" }));
-        getContentPane().add(cboFactura, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 40, 120, -1));
+
+        jLabel2.setText("TOTAL");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(62, 62, 62)
+                .addComponent(jLabel1)
+                .addGap(16, 16, 16)
+                .addComponent(cboFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
+                .addComponent(btnConsultar)
+                .addGap(96, 96, 96))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(26, 26, 26)
+                .addComponent(txttotal, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(82, 82, 82))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cboFactura, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnConsultar)))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(txttotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -184,7 +221,9 @@ public class CM_Ejemplo5 extends javax.swing.JFrame {
     private javax.swing.JButton btnConsultar;
     private javax.swing.JComboBox<String> cboFactura;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblConsulta;
+    private javax.swing.JTextField txttotal;
     // End of variables declaration//GEN-END:variables
 }
