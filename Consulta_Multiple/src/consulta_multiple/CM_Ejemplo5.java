@@ -21,6 +21,7 @@ public class CM_Ejemplo5 extends javax.swing.JFrame {
             dtm.setColumnIdentifiers(titulos);
             tblConsulta.setModel(dtm);    
             conectar();
+            Factura();
     }
     public void conectar(){
         String url="jdbc:sqlserver://localhost;databaseName=ventasNoche;user="
@@ -45,7 +46,7 @@ public class CM_Ejemplo5 extends javax.swing.JFrame {
     }
     private void mostrar(){
         
-        String valor=txtFactura.getText();
+        String valor=(String)cboFactura.getSelectedItem();
         try{
             String sql="SELECT v.cod_ven,(c.nombre_clie+' '+c.ape_pat_clie),p.des_prod,p.pre_ven_pro,dv.cant_vta,(dv.cant_vta*p.pre_ven_pro) \n" +
                     "FROM Cliente c INNER JOIN Venta v ON c.cod_clie=v.cod_clie JOIN DetVenta dv ON v.cod_ven=dv.cod_ven\n" +
@@ -71,6 +72,22 @@ public class CM_Ejemplo5 extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane,ex.getMessage());
         }
     }
+    
+    private void Factura(){
+        try{
+            String sql="SELECT cod_ven FROM Venta order by cod_ven";
+            stmt=con.createStatement();
+            rs=stmt.executeQuery(sql);
+            while (rs.next()){
+            cboFactura.addItem(rs.getString(1));
+            }
+//            con.close();
+//            stmt.close();
+        }
+        catch (Exception ex){
+            JOptionPane.showMessageDialog(rootPane,ex.getMessage());
+        }
+    }    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -82,17 +99,16 @@ public class CM_Ejemplo5 extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        txtFactura = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblConsulta = new javax.swing.JTable();
         btnConsultar = new javax.swing.JButton();
+        cboFactura = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("CÓDIGO DE VENTA");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, -1, -1));
-        getContentPane().add(txtFactura, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, 100, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 40, -1, -1));
 
         tblConsulta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -107,7 +123,7 @@ public class CM_Ejemplo5 extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblConsulta);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, -1, 260));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 570, 260));
 
         btnConsultar.setText("CONSULTAR");
         btnConsultar.addActionListener(new java.awt.event.ActionListener() {
@@ -115,7 +131,10 @@ public class CM_Ejemplo5 extends javax.swing.JFrame {
                 btnConsultarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnConsultar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 40, -1, -1));
+        getContentPane().add(btnConsultar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 40, -1, -1));
+
+        cboFactura.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Seleccionar>" }));
+        getContentPane().add(cboFactura, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 40, 120, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -163,9 +182,9 @@ public class CM_Ejemplo5 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConsultar;
+    private javax.swing.JComboBox<String> cboFactura;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblConsulta;
-    private javax.swing.JTextField txtFactura;
     // End of variables declaration//GEN-END:variables
 }

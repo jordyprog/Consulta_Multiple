@@ -48,7 +48,6 @@ public class CM_Ejemplo3 extends javax.swing.JFrame {
         try{
             String sql="SELECT c.nombre_clie,(c.ape_pat_clie+' '+c.ape_mat_clie),"
             + "c.dir_clie,v.fec_ven FROM Cliente AS c INNER JOIN Venta AS v ON (c.cod_clie=v.cod_clie) WHERE v.fec_ven>'"+valor1+"' AND v.fec_ven<'"+valor2+"'";
-            
             stmt=con.createStatement();
             rs=stmt.executeQuery(sql);
             limpiar();
@@ -94,10 +93,13 @@ public class CM_Ejemplo3 extends javax.swing.JFrame {
         txtf2 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("FECHA1");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 14, -1, -1));
 
         jLabel2.setText("FECHA2");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(188, 14, -1, -1));
 
         tblcliec.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -112,51 +114,17 @@ public class CM_Ejemplo3 extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblcliec);
 
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 37, 381, 189));
+
         btnCONSULTA.setText("CONSULTA");
         btnCONSULTA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCONSULTAActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtf1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtf2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(76, 76, 76))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(165, 165, 165)
-                .addComponent(btnCONSULTA)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(txtf1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtf2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnCONSULTA)
-                .addContainerGap(24, Short.MAX_VALUE))
-        );
+        getContentPane().add(btnCONSULTA, new org.netbeans.lib.awtextra.AbsoluteConstraints(165, 244, -1, -1));
+        getContentPane().add(txtf1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 12, 90, -1));
+        getContentPane().add(txtf2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 12, 90, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

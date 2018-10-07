@@ -47,9 +47,9 @@ public class CM_Ejemplo2 extends javax.swing.JFrame {
         String valor=(String)cbocodp.getSelectedItem();
         try{
             String sql="SELECT * FROM DetVenta WHERE cod_prod='"+valor+"'";
-            limpiar();
             stmt=con.createStatement();
             rs=stmt.executeQuery(sql);
+            limpiar();
             while(rs.next()){
             String []datos02=new String[3];
             datos02[0]=rs.getString(1);
@@ -105,10 +105,13 @@ public class CM_Ejemplo2 extends javax.swing.JFrame {
         btnCONSULTA = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         cbocodp.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Seleccionar>" }));
+        getContentPane().add(cbocodp, new org.netbeans.lib.awtextra.AbsoluteConstraints(76, 12, 115, -1));
 
         jLabel1.setText("cod_prod");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 17, -1, -1));
 
         tbldetventa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -123,44 +126,15 @@ public class CM_Ejemplo2 extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tbldetventa);
 
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 54, 375, 111));
+
         btnCONSULTA.setText("CONSULTA");
         btnCONSULTA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCONSULTAActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbocodp, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(147, 147, 147)
-                        .addComponent(btnCONSULTA)))
-                .addContainerGap(13, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(cbocodp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnCONSULTA)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        getContentPane().add(btnCONSULTA, new org.netbeans.lib.awtextra.AbsoluteConstraints(159, 183, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
