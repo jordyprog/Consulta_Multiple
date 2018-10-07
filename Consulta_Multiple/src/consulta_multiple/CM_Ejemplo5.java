@@ -50,10 +50,9 @@ public class CM_Ejemplo5 extends javax.swing.JFrame {
             String sql="SELECT v.cod_ven,(c.nombre_clie+' '+c.ape_pat_clie),p.des_prod,p.pre_ven_pro,dv.cant_vta,(dv.cant_vta*p.pre_ven_pro) \n" +
                     "FROM Cliente c INNER JOIN Venta v ON c.cod_clie=v.cod_clie JOIN DetVenta dv ON v.cod_ven=dv.cod_ven\n" +
                     "INNER JOIN Producto p ON p.cod_prod=dv.cod_prod WHERE v.cod_ven='"+valor+"'";
-            
-            limpiar();
             stmt=con.createStatement();
             rs=stmt.executeQuery(sql);
+            limpiar();
             while(rs.next()){
             String []datos=new String[6];
             datos[0]=rs.getString(1);
