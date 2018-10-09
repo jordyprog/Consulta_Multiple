@@ -105,7 +105,6 @@ public class CM_Ejemplo2 extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbldetventa = new javax.swing.JTable();
         btnCONSULTA = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -138,9 +137,6 @@ public class CM_Ejemplo2 extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnCONSULTA, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 190, -1, -1));
-
-        jButton1.setText("jButton1");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -188,7 +184,6 @@ public class CM_Ejemplo2 extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCONSULTA;
     private javax.swing.JComboBox<String> cbocodp;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbldetventa;
