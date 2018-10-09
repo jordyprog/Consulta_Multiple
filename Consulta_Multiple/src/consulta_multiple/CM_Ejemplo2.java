@@ -21,7 +21,7 @@ public class CM_Ejemplo2 extends javax.swing.JFrame {
      */
     public CM_Ejemplo2() {
         initComponents();
-            String titulos []={"cod_ven","cod_prod","can_ven"};
+            String titulos []={"Código","Producto","Cantidad","Total"};
             dtm02.setColumnIdentifiers(titulos);
             tbldetventa.setModel(dtm02);    
             conectar02();
@@ -46,15 +46,17 @@ public class CM_Ejemplo2 extends javax.swing.JFrame {
     private void mostrar(){
         String valor=(String)cbocodp.getSelectedItem();
         try{
-            String sql="SELECT * FROM DetVenta WHERE cod_prod='"+valor+"'";
+            String sql="SELECT dv.cod_ven,p.des_prod,dv.cant_vta,(dv.cant_vta*p.pre_ven_pro)"
+                    + "FROM DetVenta AS dv INNER JOIN Producto AS p ON (dv.cod_prod=p.cod_prod) WHERE p.cod_prod='"+valor+"'";
             stmt=con.createStatement();
             rs=stmt.executeQuery(sql);
             limpiar();
             while(rs.next()){
-            String []datos02=new String[3];
+            String []datos02=new String[4];
             datos02[0]=rs.getString(1);
             datos02[1]=rs.getString(2);
             datos02[2]=rs.getString(3);
+            datos02[3]=rs.getString(4);
             dtm02.addRow(datos02);
             }
 //            con.close();
@@ -75,7 +77,7 @@ public class CM_Ejemplo2 extends javax.swing.JFrame {
     
     private void codp(){
         try{
-            String sql="SELECT cod_prod FROM DetVenta order by cod_prod";
+            String sql="SELECT cod_prod FROM Producto order by cod_prod";
             stmt=con.createStatement();
             rs=stmt.executeQuery(sql);
             while (rs.next()){
@@ -126,7 +128,7 @@ public class CM_Ejemplo2 extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tbldetventa);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 54, 375, 111));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 54, 430, 111));
 
         btnCONSULTA.setText("CONSULTA");
         btnCONSULTA.addActionListener(new java.awt.event.ActionListener() {
@@ -134,7 +136,7 @@ public class CM_Ejemplo2 extends javax.swing.JFrame {
                 btnCONSULTAActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCONSULTA, new org.netbeans.lib.awtextra.AbsoluteConstraints(159, 183, -1, -1));
+        getContentPane().add(btnCONSULTA, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 190, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
