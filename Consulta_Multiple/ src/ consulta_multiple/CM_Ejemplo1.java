@@ -87,7 +87,6 @@ public class CM_Ejemplo1 extends javax.swing.JFrame{
             cboapepat.addItem(rs.getString(1));
             }
 //            con.close();
-//            stmt.close();
         }
         catch (Exception ex){
             JOptionPane.showMessageDialog(rootPane,ex.getMessage());
