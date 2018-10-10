@@ -4,18 +4,73 @@
  * and open the template in the editor.
  */
 package consulta_multiple;
+import java.sql.*;
+import javax.swing.JOptionPane;
+import javax.swing.table.*;
 
-/**
- *
- * @author Jordy J
- */
 public class CM_Ejemplo5 extends javax.swing.JFrame {
 
-    /**
-     * Creates new form CM_Ejemplo5
-     */
+    Connection con;
+    Statement stmt;
+    ResultSet rs;
+    DefaultTableModel dtm=new DefaultTableModel();
+    
     public CM_Ejemplo5() {
         initComponents();
+        String titulos []={"Código_Venta","Cliente","Producto","Precio_Unit.","Cantidad","Sub_Total"};
+            dtm.setColumnIdentifiers(titulos);
+            tblConsulta.setModel(dtm);    
+            conectar();
+    }
+    public void conectar(){
+        String url="jdbc:sqlserver://localhost;databaseName=ventasNoche;user="
+        + "sa;password=123456;";
+        try{
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            con=DriverManager.getConnection(url);
+            JOptionPane.showMessageDialog(rootPane, "Bienvenido", "Conectar",
+            JOptionPane.INFORMATION_MESSAGE);
+        }
+        catch(Exception ex){
+            JOptionPane.showMessageDialog(rootPane, "No se pudo conectar a la"
+            + "base de datos", "Conectar", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    private void limpiar(){
+        int filas;
+        filas=dtm.getRowCount()-1;
+        for(int i=filas;i>=0;i--){
+            dtm.removeRow(i);
+        }    
+    }
+    private void mostrar(){
+        
+        String valor=txtFactura.getText();
+        try{
+            String sql="SELECT v.cod_ven,(c.nombre_clie+' '+c.ape_pat_clie),p.des_prod,p.pre_ven_pro,dv.cant_vta,(dv.cant_vta*p.pre_ven_pro) \n" +
+                    "FROM Cliente c INNER JOIN Venta v ON c.cod_clie=v.cod_clie JOIN DetVenta dv ON v.cod_ven=dv.cod_ven\n" +
+                    "INNER JOIN Producto p ON p.cod_prod=dv.cod_prod WHERE v.cod_ven='"+valor+"'";
+            
+            limpiar();
+            stmt=con.createStatement();
+            rs=stmt.executeQuery(sql);
+            while(rs.next()){
+            String []datos=new String[6];
+            datos[0]=rs.getString(1);
+            datos[1]=rs.getString(2);
+            datos[2]=rs.getString(3);
+            datos[3]=rs.getString(4);
+            datos[4]=rs.getString(5);
+            datos[5]=rs.getString(6);
+
+            dtm.addRow(datos);
+            }
+//            con.close();
+//            stmt.close();
+        }
+        catch (Exception ex){
+            JOptionPane.showMessageDialog(rootPane,ex.getMessage());
+        }
     }
 
     /**
@@ -27,21 +82,49 @@ public class CM_Ejemplo5 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jLabel1 = new javax.swing.JLabel();
+        txtFactura = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblConsulta = new javax.swing.JTable();
+        btnConsultar = new javax.swing.JButton();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setText("CÓDIGO DE VENTA");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, -1, -1));
+        getContentPane().add(txtFactura, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, 100, -1));
+
+        tblConsulta.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblConsulta);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, -1, 260));
+
+        btnConsultar.setText("CONSULTAR");
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnConsultar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 40, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        // TODO add your handling code here:
+        mostrar();
+    }//GEN-LAST:event_btnConsultarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -80,5 +163,10 @@ public class CM_Ejemplo5 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnConsultar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblConsulta;
+    private javax.swing.JTextField txtFactura;
     // End of variables declaration//GEN-END:variables
 }
