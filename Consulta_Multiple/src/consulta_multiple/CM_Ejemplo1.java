@@ -29,7 +29,7 @@ public class CM_Ejemplo1 extends javax.swing.JFrame{
     }
     
     public void conectar01(){
-        String url="jdbc:sqlserver://localhost;databaseName=ventasNoche;user="
+        String url="jdbc:sqlserver://localhost;databaseName=FLORERIA;user="
         + "sa;password=123456;";
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
