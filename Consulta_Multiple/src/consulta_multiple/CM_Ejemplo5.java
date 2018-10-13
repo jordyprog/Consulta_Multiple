@@ -65,7 +65,7 @@ public class CM_Ejemplo5 extends javax.swing.JFrame {
             }
             int item=tblConsulta.getRowCount();double stotal,total=0;
             for (int i = 0; i < item; i++) {
-                stotal=Double.parseDouble(String.valueOf(tblConsulta.getValueAt(i, 5)));
+                stotal=Double.parseDouble((String)tblConsulta.getValueAt(i, 5));
                 total=total+stotal;}
             txttotal.setText(String.valueOf(total));
 //            con.close();
